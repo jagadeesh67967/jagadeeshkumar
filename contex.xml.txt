@@ -5,9 +5,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
  http://www.springframework.org/schema/beans/spring-beans.xsd 
  http://www.springframework.org/schema/context
   http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
-
-<bean id="employee" class="com.zensar.beans.Employee" autowire="byType">
+ 
+<bean id="employee" class="com.zensar.beans.Employee" autowire="byName">
   <property name="employeeId" value="1"></property>
   <property name="employeeName" value="vijay"></property>
 
