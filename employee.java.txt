@@ -6,7 +6,8 @@ public class Employee {
 	private String employeeName;
 	
 	
-	
+	@Autowired
+        @Qualifier("department")
 	private Department department;
 	
 	public Employee() {
