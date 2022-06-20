@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,15 +40,43 @@ public class CoupenController {
 
 	}
 
-	@GetMapping(value = "/coupens/coupencode/{coupencode}")
-	public List<CoupenEntity> getByCoupenCode(@PathVariable("coupenCode") String coupenCode) {
-		return CoupenService.getByCoupenCode(coupenCode);
+	@GetMapping(value = "/coupens/coupencode/{coupenCode}")
+	public List<CoupenEntity> findByCoupenCode(@PathVariable("coupenCode") String coupenCode) {
+		return CoupenService.findByCoupenCode(coupenCode);
 	}
+
+	/*
+	 * @GetMapping(value = "/coupens/coupencode/{coupenCode}") public
+	 * ResponseEntity<List<CoupenDto>> test(@PathVariable("coupenCode") String
+	 * coupenCode) { return new
+	 * ResponseEntity<List<CoupenDto>>(CoupenService.test(coupenCode),
+	 * HttpStatus.FOUND); }
+	 */
+
+	@GetMapping(value = "/coupens/{coupenCode}/{expDate}")
+	public List<CoupenEntity> findByCoupenCodeAndExpDate(@PathVariable("coupenCode") String coupenCode,
+
+			@PathVariable("expDate") String ExpDate) {
+		return CoupenService.findByCoupenCodeAndExpDate(coupenCode, ExpDate);
+
+	}
+
+	/*
+	 * @GetMapping(value = "/coupens/{coupenCode}/{expDate}") public
+	 * ResponseEntity<List<CoupenDto>> test1(@PathVariable("coupenCode") String
+	 * coupenCode,
+	 * 
+	 * @PathVariable("expDate") String ExpDate) { return new
+	 * ResponseEntity<List<CoupenDto>>(CoupenService.test1(coupenCode, ExpDate),
+	 * HttpStatus.FOUND);
+	 * 
+	 * }
+	 */
 
 	// @RequestMapping(value = "/coupens",method = RequestMethod.GET)
 	@GetMapping(value = "/coupens")
-	public ResponseEntity<List<CoupenDto>> getAllCoupens() {
-		return new ResponseEntity<List<CoupenDto>>( CoupenService.getAllCoupens(), HttpStatus.FOUND);
+	public ResponseEntity<List<CoupenDto>> getAllCoupens(@RequestParam(value = "pageNumber",required = false,defaultValue = "0")int pageNumber,@RequestParam(value = "pageSize",required = false,defaultValue = "2")int pageSize) {
+		return new ResponseEntity<List<CoupenDto>>(CoupenService.getAllCoupens(pageNumber,pageSize), HttpStatus.FOUND);
 	}
 
 	// @RequestMapping(value="/coupens",method = RequestMethod.POST)

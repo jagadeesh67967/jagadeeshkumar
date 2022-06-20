@@ -9,7 +9,7 @@ public interface CoupenService {
 
 	public CoupenDto getCoupen(int coupenId);
 
-	public List<CoupenDto> getAllCoupens();
+	public List<CoupenDto> getAllCoupens(int pageNumber,int pageSize);
 
 	public CoupenDto insertCoupen(CoupenDto coupen);
 
@@ -17,6 +17,12 @@ public interface CoupenService {
 
 	public void deleteCoupen(int coupenId);
 
-	List<CoupenEntity> getByCoupenCode(String CoupenCode);
+	List<CoupenEntity> findByCoupenCode(String CoupenCode);
+	//List<CoupenDto> test(String CoupenCode);
+	
+	List<CoupenEntity> findByCoupenCodeAndExpDate(String CoupenCode,String ExpDate);
+	//List<CoupenDto> test1(String CoupenCode,String ExpDate);
+
+
 
 }

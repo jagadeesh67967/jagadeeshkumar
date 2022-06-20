@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.zensar.springcoupenproject.dto.CoupenDto;
@@ -20,32 +22,36 @@ public class CoupenServiceImpl implements CoupenService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	
+	@Override
 	public CoupenDto getCoupen(int coupenId) {
 		CoupenEntity coupenEntity = coupenRepository.findById(coupenId).get();
-		
+
 		// CoupenDto dto=mapToDto(coupenEntity);
 		return modelMapper.map(coupenEntity, CoupenDto.class);
 
 		// return dto;
 	}
 
+	@Override
+	public List<CoupenDto> getAllCoupens(int pageNumber,int pageSize) {
+		//List<CoupenEntity> listOfCoupens = coupenRepository.findAll();
+		List<CoupenDto> listOfCoupenDto = new ArrayList<CoupenDto>();
+		
+		Page<CoupenEntity> findAll = coupenRepository.findAll(PageRequest.of(pageNumber,pageSize));
+		List<CoupenEntity> content = findAll.getContent();
 
-	public List<CoupenDto> getAllCoupens() {
-		List<CoupenEntity> listOfCoupens = coupenRepository.findAll();
-		List<CoupenDto> listOfStudentDto = new ArrayList<CoupenDto>();
-
-		for (CoupenEntity coupenEntity : listOfCoupens) {
+		for (CoupenEntity coupenEntity : content) {
 			// listOfCoupenDto.add(mapToDto(CoupenEntity));
-			//listOfCoupenDto.add(modelMapper.map(coupenEntity, CoupenDto.class));
+			listOfCoupenDto.add(modelMapper.map(coupenEntity, CoupenDto.class));
 		}
 
-		return null;
+		return listOfCoupenDto;
 	}
-	
+
+	@Override
 	public CoupenDto insertCoupen(CoupenDto coupenDto) {
 		// CoupenEntity coupen = mapToEntity(coupenDto);
-	
+
 		CoupenEntity coupen = modelMapper.map(coupenDto, CoupenEntity.class);
 
 		CoupenEntity insertedCoupen = coupenRepository.save(coupen);
@@ -55,7 +61,8 @@ public class CoupenServiceImpl implements CoupenService {
 
 		// return mapToDto;
 	}
-	
+
+	@Override
 	public void updatedCoupen(int coupenId, CoupenDto coupenDto) {
 		// CoupenEntity coupen = mapToEntity(coupenDto);
 		CoupenEntity coupen = modelMapper.map(coupenDto, CoupenEntity.class);
@@ -64,15 +71,59 @@ public class CoupenServiceImpl implements CoupenService {
 
 	}
 
+	@Override
 	public void deleteCoupen(int coupenId) {
 		coupenRepository.deleteById(coupenId);
 
 	}
 
-	public List<CoupenEntity> getByCoupenCode(String coupenCode) {
-		return coupenRepository.getByCoupenCode(coupenCode);
+	@Override
+	public List<CoupenEntity> findByCoupenCode(String coupenCode) {
+		return coupenRepository.findByCoupenCode(coupenCode);
 	}
 
-	
+	/*
+	 * @Override public List<CoupenDto> test(String coupenCode) { List<CoupenDto>
+	 * coupenDto = new ArrayList<>(); List<CoupenEntity> coupens =
+	 * (List<CoupenEntity>) coupenRepository.test(coupenCode); for(CoupenEntity
+	 * coupen:coupens) coupenDto.add(modelMapper.map(coupen,CoupenDto.class));
+	 * return coupenDto; }
+	 */
+
+	@Override
+	public List<CoupenEntity> findByCoupenCodeAndExpDate(String coupenCode, String ExpDate) {
+		return coupenRepository.findByCoupenCodeAndExpDate(coupenCode, ExpDate);
+	}
+
+	/*
+	 * @Override public List<CoupenDto> test1(String coupenCode, String ExpDate) {
+	 * List<CoupenDto> coupenDto = new ArrayList<>(); List<CoupenEntity> coupens =
+	 * (List<CoupenEntity>) coupenRepository.test1(coupenCode,ExpDate);
+	 * for(CoupenEntity coupen:coupens)
+	 * coupenDto.add(modelMapper.map(coupen,CoupenDto.class)); return coupenDto; }
+	 */
+
+	/*
+	 * public CoupenDto mapToDto(Coupen coupen) {
+	 * 
+	 * CoupenDto dto=new CoupenDto(); dto.setCoupenId(coupen.getCoupenId());
+	 * dto.setexpDate(student.getexpDate());
+	 * dto.setCoupenCode(coupen.getCoupenCode());
+	 * 
+	 * return dto;
+	 * 
+	 * }
+	 * 
+	 * public Coupen mapToEntity(CoupenDto coupenDto) {
+	 * 
+	 * Coupen coupen=new Coupen(); coupen.setCoupenId(coupenDto.getCoupenId());
+	 * coupen.setexpDate(coupenDto.getexpDate());
+	 * coupen.setCoupenCode(coupenDto.getCoupenCode());
+	 * 
+	 * return coupen;
+	 * 
+	 * 
+	 * }
+	 */
 
 }

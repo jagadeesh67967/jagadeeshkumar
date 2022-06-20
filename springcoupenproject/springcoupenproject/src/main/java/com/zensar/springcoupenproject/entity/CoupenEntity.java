@@ -2,8 +2,15 @@ package com.zensar.springcoupenproject.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 
 @Entity
+//@NamedQuery(name = "Coupen.test", query = "from Coupen c where c.coupenCode=?1")
+//@NamedQuery(name = "Coupen.test1", query = "from Coupen c where c.coupenCode=?1 and c.expDate=?2")
+
+//@NamedNativeQuery(name = "Coupen.test", query = "select * from coupen where coupen_code=?1",resultClass = Coupen.class)
+//@NamedNativeQuery(name = "Coupen.test", query = "select * from coupen where coupen_code=?1 and exp_date=?2",resultClass = Coupen.class)
 public class CoupenEntity {
 	
 	@Id
