@@ -15,6 +15,7 @@
 	<name>springproduct</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+	<packaging>war</packaging>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
