@@ -75,8 +75,12 @@ public class CoupenController {
 
 	// @RequestMapping(value = "/coupens",method = RequestMethod.GET)
 	@GetMapping(value = "/coupens")
-	public ResponseEntity<List<CoupenDto>> getAllCoupens(@RequestParam(value = "pageNumber",required = false,defaultValue = "0")int pageNumber,@RequestParam(value = "pageSize",required = false,defaultValue = "2")int pageSize) {
-		return new ResponseEntity<List<CoupenDto>>(CoupenService.getAllCoupens(pageNumber,pageSize), HttpStatus.FOUND);
+	public ResponseEntity<List<CoupenDto>> getAllCoupens(
+			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+			@RequestParam(value = "pageSize", required = false, defaultValue = "2") int pageSize,
+			@RequestParam(value = "sortby", required = false, defaultValue = "coupenCode") String coupenCode,
+			@RequestParam(value = "direction", required = false, defaultValue = "DESC") String coupen) {
+		return new ResponseEntity<List<CoupenDto>>(CoupenService.getAllCoupens(pageNumber, pageSize), HttpStatus.FOUND);
 	}
 
 	// @RequestMapping(value="/coupens",method = RequestMethod.POST)

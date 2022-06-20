@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.zensar.springcoupenproject.dto.CoupenDto;
@@ -37,7 +39,7 @@ public class CoupenServiceImpl implements CoupenService {
 		//List<CoupenEntity> listOfCoupens = coupenRepository.findAll();
 		List<CoupenDto> listOfCoupenDto = new ArrayList<CoupenDto>();
 		
-		Page<CoupenEntity> findAll = coupenRepository.findAll(PageRequest.of(pageNumber,pageSize));
+		Page<CoupenEntity> findAll = coupenRepository.findAll(PageRequest.of(pageNumber,pageSize,Sort.by(Direction.DESC,"coupenCode")));
 		List<CoupenEntity> content = findAll.getContent();
 
 		for (CoupenEntity coupenEntity : content) {
