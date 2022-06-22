@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/javabatch
+    password: root
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+       # dialect: org.hibernate.dialect.MySQLDialect
+       
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+        exclude:
+        - health
+        - beans
+        
+        
+  endpoint:
+    shutdown:
+      enabled: true 
+ 
+        
+      
