@@ -37,8 +37,8 @@ public class ProductController {
 	}
 
 	@GetMapping("/products/productname/{productName}")
-	public List<Product> findByStudentName(@PathVariable("productName") String productName) {
-		return ProductService.findByProductName(productName);
+	public ResponseEntity<List<ProductDto>> findByProductName(@PathVariable("productName") String productName) {
+		return new ResponseEntity<List<ProductDto>>(ProductService.findByProductName(productName), HttpStatus.FOUND);
 
 	}
 
@@ -51,10 +51,10 @@ public class ProductController {
 	 */
 
 	@GetMapping(value = "/products/{productName}/{productCost}")
-	public List<Product> findByProductNameAndProductCost(@PathVariable("productName") String productName,
-
-			@PathVariable("productCost") int productCost) {
-		return ProductService.findByProductNameAndProductCost(productName, productCost);
+	public ResponseEntity<List<ProductDto>> findByProductNameAndProductCost(
+			@PathVariable("productName") String productName, @PathVariable("productCost") int productCost) {
+		return new ResponseEntity<List<ProductDto>>(
+				ProductService.findByProductNameAndProductCost(productName, productCost), HttpStatus.FOUND);
 	}
 
 	/*
@@ -71,38 +71,40 @@ public class ProductController {
 	@GetMapping(value = "/products")
 	public ResponseEntity<List<ProductDto>> getAllProducts(
 			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
-			@RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize) {
+			@RequestParam(value = "pageSize", required = false, defaultValue = "3") int pageSize,
+			@RequestParam(value = "sortby", required = false, defaultValue = "productName") String productName,
+			@RequestParam(value = "direction", required = false, defaultValue = "DESC") String product) {
 		return new ResponseEntity<List<ProductDto>>(ProductService.getAllProducts(pageNumber, pageSize),
 				HttpStatus.FOUND);
 	}
 
-	// @RequestMapping(value="/students",method = RequestMethod.POST)
+	// @RequestMapping(value="/products",method = RequestMethod.POST)
 	@PostMapping(value = "/products")
 	public ResponseEntity<ProductDto> insertProduct(@RequestBody ProductDto productDto) {
 		return new ResponseEntity<ProductDto>(ProductService.insertProduct(productDto), HttpStatus.CREATED);
 
 	}
-	
+
 	// @RequestMapping(value = "/products/{productId}",method = RequestMethod.PUT)
-		@PutMapping(value = "/products/{productId}")
-		public ResponseEntity<String> updatedProduct(@PathVariable("productId") int productId,
-				@RequestBody ProductDto productDto) {
+	@PutMapping(value = "/products/{productId}")
+	public ResponseEntity<String> updatedProduct(@PathVariable("productId") int productId,
+			@RequestBody ProductDto productDto) {
 
-			ProductService.updatedProduct(productId, productDto);
+		ProductService.updatedProduct(productId, productDto);
 
-			return new ResponseEntity<String>("Sucessfully UPDATED", HttpStatus.OK);
+		return new ResponseEntity<String>("Sucessfully UPDATED", HttpStatus.OK);
 
-		}
+	}
 
-		// @RequestMapping(value = "/products/{productId}",method =
-		// RequestMethod.DELETE)
-		@DeleteMapping(value = "/products/{productId}")
-		public ResponseEntity<String> deleteProduct(@PathVariable("productId") int productId) {
+	// @RequestMapping(value = "/products/{productId}",method =
+	// RequestMethod.DELETE)
+	@DeleteMapping(value = "/products/{productId}")
+	public ResponseEntity<String> deleteProduct(@PathVariable("productId") int productId) {
 
-			ProductService.deleteProduct(productId);
+		ProductService.deleteProduct(productId);
 
-			return new ResponseEntity<String>("Sucessfully Deleted", HttpStatus.OK);
+		return new ResponseEntity<String>("Sucessfully Deleted", HttpStatus.OK);
 
-		}
+	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.zensar.springproduct.dto.ProductDto;
@@ -40,7 +41,8 @@ public class ProductServiceImpl implements ProductService {
 		// List<Product> listOfProduct = productRepository.findAll();
 		List<ProductDto> listOfProductDto = new ArrayList<ProductDto>();
 
-		Page<Product> findAll = productRepository.findAll(PageRequest.of(pageNumber, pageSize));
+		Page<Product> findAll = productRepository
+				.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(Direction.DESC, "productName")));
 		List<Product> content = findAll.getContent();
 
 		for (Product product : content) {
@@ -54,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductDto insertProduct(ProductDto productDto) {
 		// Product product = mapToEntity(productDto);
-		Product product = modelMapper.map(productDto , Product.class);
+		Product product = modelMapper.map(productDto, Product.class);
 
 		Product insertedProduct = productRepository.save(product);
 
@@ -79,33 +81,39 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> findByProductName(String productName) {
-		return productRepository.findByProductName(productName);
+	public List<ProductDto> findByProductName(String productName) {
+		List<ProductDto> productDto = new ArrayList<>();
+		List<Product> products = (List<Product>) productRepository.findByProductName(productName);
+		for (Product product : products)
+			productDto.add(modelMapper.map(product, ProductDto.class));
+		return productDto;
+
 	}
-	
 
 	/*
 	 * @Override public List<ProductDto> test(String productName) { List<ProductDto>
 	 * productDto = new ArrayList<>(); List<Product> products = (List<Product>)
 	 * productRepository.test(productName); for(Product product:products)
-	 * productDto.add(modelMapper.map(product,ProductDto.class)); return productDto; 
+	 * productDto.add(modelMapper.map(product,ProductDto.class)); return productDto;
 	 * }
 	 */
 
 	@Override
-	public List<Product> findByProductNameAndProductCost(String productName, int productCost) {
-		return productRepository.findByProductNameAndProductCost(productName, productCost);
+	public List<ProductDto> findByProductNameAndProductCost(String productName, int productCost) {
+		 List<ProductDto> productDto = new ArrayList<>(); 
+		 List<Product> products =(List<Product>) productRepository.findByProductNameAndProductCost(productName, productCost); 
+		 for (Product product : products) productDto.add(modelMapper.map(product,ProductDto.class)); 
+		 return productDto;
 	}
 
-	
 	/*
-	 * @Override public List<ProductDto> test1(String productName, int productCost) {
-	 * List<ProductDto> productDto = new ArrayList<>(); List<Product> products =
-	 * (List<Product>) productRepository.test1(productName,productCost); for(Product
-	 * product:products) productDto.add(modelMapper.map(product,productDto.class));
-	 * return productDto; }
+	 * @Override public List<ProductDto> test1(String productName, int productCost)
+	 * { List<ProductDto> productDto = new ArrayList<>(); List<Product> products =
+	 * (List<Product>) productRepository.test1(productName, productCost); for
+	 * (Product product : products) productDto.add(modelMapper.map(product,
+	 * ProductDto.class)); return productDto; }
 	 */
-	
+
 	/*
 	 * public ProductDto mapToDto(Product product) {
 	 * 

@@ -21,10 +21,10 @@ public interface ProductService {
 	
 	public void deleteProduct(int productId);
 
-	List<Product> findByProductName(String productName);
+	List<ProductDto> findByProductName(String productName);
 	//List<ProductDto> test(String productName);
 	
-    List<Product> findByProductNameAndProductCost(String productName,int productCost);
+    List<ProductDto> findByProductNameAndProductCost(String productName,int productCost);
     //List<ProductDto> test1(String productName,int productCost);
 
 
