@@ -11,5 +11,38 @@ spring:
       hibernate:
         format_sql: true
        # dialect: org.hibernate.dialect.MySQLDialect
+       
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+        exclude:
+        - beans
+        
+      base-path: /newactuator
+      
+  info:
+    build:
+      enabled: true
+    git:
+      enabled: true
+    env:
+      enabled: true
+   # created by: jagadeesh
+        
+  endpoint:
+    shutdown:
+      enabled: true 
+      
+logging:
+  level:
+    com:
+    zensar: debug
+       
+      
+      
+ 
         
       

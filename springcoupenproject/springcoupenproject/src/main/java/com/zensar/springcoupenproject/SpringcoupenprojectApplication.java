@@ -13,7 +13,7 @@ public class SpringcoupenprojectApplication extends SpringBootServletInitializer
 	public static void main(String... args) {
 		SpringApplication.run(SpringcoupenprojectApplication.class, args);
 		
-		System.out.println("jagadeesh");
+		System.out.println("yogi");
 	}
 
 	@Bean

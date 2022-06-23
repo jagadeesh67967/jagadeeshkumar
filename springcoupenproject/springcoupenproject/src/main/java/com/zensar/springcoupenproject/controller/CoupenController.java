@@ -41,8 +41,8 @@ public class CoupenController {
 	}
 
 	@GetMapping(value = "/coupens/coupencode/{coupenCode}")
-	public List<CoupenEntity> findByCoupenCode(@PathVariable("coupenCode") String coupenCode) {
-		return CoupenService.findByCoupenCode(coupenCode);
+	public ResponseEntity<List<CoupenDto>> findByCoupenCode(@PathVariable("coupenCode") String coupenCode) {
+		return new ResponseEntity<List<CoupenDto>>(CoupenService.findByCoupenCode(coupenCode), HttpStatus.FOUND);
 	}
 
 	/*
@@ -54,10 +54,10 @@ public class CoupenController {
 	 */
 
 	@GetMapping(value = "/coupens/{coupenCode}/{expDate}")
-	public List<CoupenEntity> findByCoupenCodeAndExpDate(@PathVariable("coupenCode") String coupenCode,
-
+	public ResponseEntity<List<CoupenDto>> findByCoupenCodeAndExpDate(@PathVariable("coupenCode") String coupenCode,
 			@PathVariable("expDate") String ExpDate) {
-		return CoupenService.findByCoupenCodeAndExpDate(coupenCode, ExpDate);
+		return new ResponseEntity<List<CoupenDto>>(CoupenService.findByCoupenCodeAndExpDate(coupenCode, ExpDate),
+				HttpStatus.FOUND);
 
 	}
 

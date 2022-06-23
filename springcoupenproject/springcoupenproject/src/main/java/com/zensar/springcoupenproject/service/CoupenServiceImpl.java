@@ -80,8 +80,11 @@ public class CoupenServiceImpl implements CoupenService {
 	}
 
 	@Override
-	public List<CoupenEntity> findByCoupenCode(String coupenCode) {
-		return coupenRepository.findByCoupenCode(coupenCode);
+	public List<CoupenDto> findByCoupenCode(String coupenCode) {
+		List<CoupenDto> coupenDto = new ArrayList<>();
+		List<CoupenEntity> coupens =(List<CoupenEntity>) coupenRepository.findByCoupenCode(coupenCode);
+		 for(CoupenEntity coupen:coupens) coupenDto.add(modelMapper.map(coupen,CoupenDto.class));
+		 return coupenDto;
 	}
 
 	/*
@@ -93,8 +96,11 @@ public class CoupenServiceImpl implements CoupenService {
 	 */
 
 	@Override
-	public List<CoupenEntity> findByCoupenCodeAndExpDate(String coupenCode, String ExpDate) {
-		return coupenRepository.findByCoupenCodeAndExpDate(coupenCode, ExpDate);
+	public List<CoupenDto> findByCoupenCodeAndExpDate(String coupenCode, String ExpDate) {
+		 List<CoupenDto> coupenDto = new ArrayList<>();
+		 List<CoupenEntity> coupens = (List<CoupenEntity>) coupenRepository.findByCoupenCodeAndExpDate(coupenCode,ExpDate);
+		 for(CoupenEntity coupen:coupens)coupenDto.add(modelMapper.map(coupen,CoupenDto.class));
+		 return coupenDto;
 	}
 
 	/*

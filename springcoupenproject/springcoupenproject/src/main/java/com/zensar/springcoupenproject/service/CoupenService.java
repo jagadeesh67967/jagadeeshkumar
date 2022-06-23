@@ -17,10 +17,10 @@ public interface CoupenService {
 
 	public void deleteCoupen(int coupenId);
 
-	List<CoupenEntity> findByCoupenCode(String CoupenCode);
+	List<CoupenDto> findByCoupenCode(String CoupenCode);
 	//List<CoupenDto> test(String CoupenCode);
 	
-	List<CoupenEntity> findByCoupenCodeAndExpDate(String CoupenCode,String ExpDate);
+	List<CoupenDto> findByCoupenCodeAndExpDate(String CoupenCode,String ExpDate);
 	//List<CoupenDto> test1(String CoupenCode,String ExpDate);
 
 
