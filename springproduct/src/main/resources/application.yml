@@ -19,13 +19,30 @@ management:
         include:
         - "*"
         exclude:
-        - health
         - beans
         
+      base-path: /modifiedactuator
+      
+  info:
+    build:
+      enabled: true
+    git:
+      enabled: true
+    env:
+      enabled: true
+   # created by: jagadeesh
         
   endpoint:
     shutdown:
       enabled: true 
+      
+logging:
+  level:
+    com:
+    zensar: debug
+       
+      
+      
  
         
       
