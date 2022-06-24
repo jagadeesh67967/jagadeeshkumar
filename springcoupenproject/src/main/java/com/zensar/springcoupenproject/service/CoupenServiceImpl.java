@@ -13,10 +13,14 @@ import org.springframework.stereotype.Service;
 
 import com.zensar.springcoupenproject.dto.CoupenDto;
 import com.zensar.springcoupenproject.entity.CoupenEntity;
+import com.zensar.springcoupenproject.exception.CoupenExistsException;
+import com.zensar.springcoupenproject.exception.NoSuchCoupenExistsException;
 import com.zensar.springcoupenproject.repository.CoupenRepository;
+
 
 @Service
 public class CoupenServiceImpl implements CoupenService {
+
 
 	@Autowired
 	private CoupenRepository coupenRepository;
@@ -24,12 +28,17 @@ public class CoupenServiceImpl implements CoupenService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+
 	@Override
 	public CoupenDto getCoupen(int coupenId) {
-		CoupenEntity coupenEntity = coupenRepository.findById(coupenId).get();
+		//CoupenEntity coupenEntity = coupenRepository.findById(coupenId).get();
 
 		// CoupenDto dto=mapToDto(coupenEntity);
-		return modelMapper.map(coupenEntity, CoupenDto.class);
+		CoupenEntity getCoupen = coupenRepository.findById(coupenId).orElse(null);
+		if(getCoupen == null) {
+			throw new NoSuchCoupenExistsException("Coupen doesn't exists");
+		}
+		return modelMapper.map(getCoupen, CoupenDto.class);
 
 		// return dto;
 	}
@@ -55,26 +64,42 @@ public class CoupenServiceImpl implements CoupenService {
 		// CoupenEntity coupen = mapToEntity(coupenDto);
 
 		CoupenEntity coupen = modelMapper.map(coupenDto, CoupenEntity.class);
+		
+		CoupenEntity getCoupen = coupenRepository.findById(coupen.getCoupenId()).get();
+		if(getCoupen == null) {
 
 		CoupenEntity insertedCoupen = coupenRepository.save(coupen);
+		
 
 		// CoupenDto mapToDto=mapToDto(insertedCoupen);
 		return modelMapper.map(insertedCoupen, CoupenDto.class);
+		}
+		else
+			throw new CoupenExistsException("Coupen already exists");
 
 		// return mapToDto;
 	}
 
 	@Override
-	public void updatedCoupen(int coupenId, CoupenDto coupenDto) {
+	public CoupenDto updatedCoupen(int coupenId, CoupenDto coupenDto) {
 		// CoupenEntity coupen = mapToEntity(coupenDto);
+		CoupenEntity getCoupen = coupenRepository.findById(coupenId).orElse(null);
+		if(getCoupen == null) {
+			throw new NoSuchCoupenExistsException("Student doesnt exists");
+		}
 		CoupenEntity coupen = modelMapper.map(coupenDto, CoupenEntity.class);
-
-		coupenRepository.save(coupen);
+		
+		CoupenEntity updatedCoupen = coupenRepository.save(coupen);
+		return modelMapper.map(updatedCoupen, CoupenDto.class);
 
 	}
 
 	@Override
 	public void deleteCoupen(int coupenId) {
+		CoupenEntity getCoupen = coupenRepository.findById(coupenId).orElse(null);
+		if(getCoupen == null) {
+			throw new NoSuchCoupenExistsException("Student doesnt exists");
+		}
 		coupenRepository.deleteById(coupenId);
 
 	}

@@ -24,6 +24,11 @@ import com.zensar.springcoupenproject.dto.CoupenDto;
 import com.zensar.springcoupenproject.entity.CoupenEntity;
 import com.zensar.springcoupenproject.service.CoupenService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/coupen-api", produces = { MediaType.APPLICATION_JSON_VALUE,
 		MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
@@ -34,6 +39,7 @@ public class CoupenController {
 	private CoupenService CoupenService;
 
 	// @RequestMapping("/coupen/{coupenId}")
+	@Operation(summary = "This is to fetch record by coupenId")
 	@GetMapping(value = "/coupens/{coupenId}")
 	public ResponseEntity<CoupenDto> getCoupen(@PathVariable("coupenId") int coupenId) {
 		return new ResponseEntity<CoupenDto>(CoupenService.getCoupen(coupenId), HttpStatus.OK);
@@ -74,6 +80,10 @@ public class CoupenController {
 	 */
 
 	// @RequestMapping(value = "/coupens",method = RequestMethod.GET)
+	@Operation(summary = "This is to get all the coupen records from database")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Fetched all records from database", content = {
+					@Content(mediaType = "application/json"), @Content(mediaType = "application/xml") }) })
 	@GetMapping(value = "/coupens")
 	public ResponseEntity<List<CoupenDto>> getAllCoupens(
 			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
@@ -84,6 +94,7 @@ public class CoupenController {
 	}
 
 	// @RequestMapping(value="/coupens",method = RequestMethod.POST)
+	@Operation(summary = "to insert the record into database")
 	@PostMapping(value = "/coupens")
 	public ResponseEntity<CoupenDto> insertCoupen(@RequestBody CoupenDto coupenDto) {
 		return new ResponseEntity<CoupenDto>(CoupenService.insertCoupen(coupenDto), HttpStatus.CREATED);
@@ -91,6 +102,7 @@ public class CoupenController {
 	}
 
 	// @RequestMapping(value = "/coupens/{coupenId}",method = RequestMethod.PUT)
+	@Operation(summary = "This is to update record by coupenId")
 	@PutMapping(value = "/coupens/{coupenId}")
 	public ResponseEntity<String> updatedCoupen(@PathVariable("coupenId") int coupenId,
 			@RequestBody CoupenDto coupenDto) {
@@ -102,6 +114,7 @@ public class CoupenController {
 	}
 
 	// @RequestMapping(value = "/coupens/{coupenId}",method = RequestMethod.DELETE)
+	@Operation(summary = "This is to delete record by coupenId from database")
 	@DeleteMapping(value = "/coupens/{coupenId}")
 	public ResponseEntity<String> deleteCoupen(@PathVariable("coupenId") int coupenId) {
 

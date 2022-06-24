@@ -13,7 +13,7 @@ public interface CoupenService {
 
 	public CoupenDto insertCoupen(CoupenDto coupen);
 
-	public void updatedCoupen(int coupenId, CoupenDto coupenDto);
+	public CoupenDto updatedCoupen(int coupenId, CoupenDto coupenDto);
 
 	public void deleteCoupen(int coupenId);
 
