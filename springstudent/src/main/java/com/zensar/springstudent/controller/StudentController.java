@@ -21,6 +21,11 @@ import com.zensar.springstudent.dto.StudentDto;
 import com.zensar.springstudent.entity.Student;
 import com.zensar.springstudent.service.StudentService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/student-api", produces = { MediaType.APPLICATION_JSON_VALUE,
 		MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
@@ -31,6 +36,7 @@ public class StudentController {
 	private StudentService StudentService;
 
 	// @RequestMapping("/student/{studentId}")
+	@Operation(summary = "This is to fetch record by studentId")
 	@GetMapping(value = "/students/{studentId}")
 	public ResponseEntity<StudentDto> getStudent(@PathVariable("studentId") int studentId) {
 		return new ResponseEntity<StudentDto>(StudentService.getStudent(studentId), HttpStatus.OK);
@@ -70,6 +76,10 @@ public class StudentController {
 	 */
 
 	// @RequestMapping(value = "/students",method = RequestMethod.GET)
+	@Operation(summary = "This is to get all the student records from database")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Fetched all records from database", content = {
+					@Content(mediaType = "application/json"), @Content(mediaType = "application/xml") }) })
 	@GetMapping(value = "/students")
 	public ResponseEntity<List<StudentDto>> getAllStudents(
 			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
@@ -81,6 +91,7 @@ public class StudentController {
 	}
 
 	// @RequestMapping(value="/students",method = RequestMethod.POST)
+	@Operation(summary = "to insert the record into database")
 	@PostMapping(value = "/students")
 	public ResponseEntity<StudentDto> insertStudent(@RequestBody StudentDto studentDto) {
 		return new ResponseEntity<StudentDto>(StudentService.insertStudent(studentDto), HttpStatus.CREATED);
@@ -88,6 +99,7 @@ public class StudentController {
 	}
 
 	// @RequestMapping(value = "/students/{studentId}",method = RequestMethod.PUT)
+	@Operation(summary = "This is to update record by studentId")
 	@PutMapping(value = "/students/{studentId}")
 	public ResponseEntity<String> updatedStudent(@PathVariable("studentId") int studentId,
 			@RequestBody StudentDto studentDto) {
@@ -100,6 +112,7 @@ public class StudentController {
 
 	// @RequestMapping(value = "/students/{studentId}",method =
 	// RequestMethod.DELETE)
+	@Operation(summary = "This is to delete record by studentId from database")
 	@DeleteMapping(value = "/students/{studentId}")
 	public ResponseEntity<String> deleteStudent(@PathVariable("studentId") int studentId) {
 

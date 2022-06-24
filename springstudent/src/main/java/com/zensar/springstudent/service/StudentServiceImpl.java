@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.zensar.springstudent.dto.StudentDto;
 import com.zensar.springstudent.entity.Student;
+import com.zensar.springstudent.exception.NoSuchStudentExistsException;
+import com.zensar.springstudent.exception.StudentExistsException;
 import com.zensar.springstudent.repository.StudentRepository;
 
 @Service
@@ -27,17 +29,21 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public StudentDto getStudent(int studentId) {
-		Student student = studentRepository.findById(studentId).get();
+		//Student student = studentRepository.findById(studentId).get();
 
 		// StudentDto dto=mapToDto(student);
-		return modelMapper.map(student, StudentDto.class);
+		Student getStudent = studentRepository.findById(studentId).orElse(null);
+		if(getStudent == null) {
+			throw new NoSuchStudentExistsException("Student doesn't exists");
+		}
+		return modelMapper.map(getStudent, StudentDto.class);
 
 		// return dto;
 
 	}
 
 	@Override
-	public List<StudentDto> getAllStudents(int pageNumber, int pageSize) {
+	public List<StudentDto> getAllStudents(int pageNumber,int pageSize) {
 		// List<Student> listOfStudent = studentRepository.findAll();
 		List<StudentDto> listOfStudentDto = new ArrayList<StudentDto>();
 
@@ -57,25 +63,38 @@ public class StudentServiceImpl implements StudentService {
 	public StudentDto insertStudent(StudentDto studentDto) {
 		// Student student = mapToEntity(studentDto);
 		Student student = modelMapper.map(studentDto, Student.class);
+		Student getStudent = studentRepository.findById(student.getStudentId()).get();
+		if(getStudent == null) {
 
 		Student insertedStudent = studentRepository.save(student);
 
 		// StudentDto mapToDto=mapToDto(insertedStudent);
 		return modelMapper.map(insertedStudent, StudentDto.class);
+		}
+		else
+			throw new StudentExistsException("Student already exists");
 
 		// return mapToDto;
 	}
 
 	@Override
-	public void updatedStudent(int studentId, StudentDto studentDto) {
+	public StudentDto updatedStudent(int studentId, StudentDto studentDto) {
 		// Student student = mapToEntity(productDto);
+		Student getStudent = studentRepository.findById(studentId).orElse(null);
+		if(getStudent == null) {
+			throw new NoSuchStudentExistsException("Student doesnt exists");
+		}
 		Student student = modelMapper.map(studentDto, Student.class);
-
-		studentRepository.save(student);
+		Student updatedStudent = studentRepository.save(student);
+		return modelMapper.map(updatedStudent, StudentDto.class);
 	}
 
 	@Override
 	public void deleteStudent(int studentId) {
+		Student getStudent = studentRepository.findById(studentId).orElse(null);
+		if(getStudent == null) {
+			throw new NoSuchStudentExistsException("Student doesnt exists");
+		}
 		studentRepository.deleteById(studentId);
 
 	}

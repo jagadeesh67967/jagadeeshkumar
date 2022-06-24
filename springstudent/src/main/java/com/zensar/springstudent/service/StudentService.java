@@ -17,7 +17,7 @@ public StudentDto getStudent(int studentId);
 	
 	public StudentDto insertStudent(StudentDto student);
 	
-	public void updatedStudent(int studentId,StudentDto studentDto);
+	public StudentDto updatedStudent(int studentId,StudentDto studentDto);
 	
 	public void deleteStudent(int studentId);
 
