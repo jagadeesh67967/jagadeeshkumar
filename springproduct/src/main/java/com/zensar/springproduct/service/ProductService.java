@@ -17,7 +17,7 @@ public interface ProductService {
 	
 	public ProductDto insertProduct(ProductDto product);
 	
-	public void updatedProduct(int productId,ProductDto productDto);
+	public ProductDto updatedProduct(int productId,ProductDto productDto);
 	
 	public void deleteProduct(int productId);
 

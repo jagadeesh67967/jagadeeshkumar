@@ -14,10 +14,13 @@ import org.springframework.stereotype.Service;
 
 import com.zensar.springproduct.dto.ProductDto;
 import com.zensar.springproduct.entity.Product;
+import com.zensar.springproduct.exception.NoSuchProductExistsException;
+import com.zensar.springproduct.exception.ProductExistsException;
 import com.zensar.springproduct.repository.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -27,10 +30,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto getProduct(int productId) {
-		Product product = productRepository.findById(productId).get();
+		//Product product = productRepository.findById(productId).get();
 
 		// ProductDto dto=mapToDto(product);
-		return modelMapper.map(product, ProductDto.class);
+		Product getProduct = productRepository.findById(productId).orElse(null);
+		if(getProduct == null) {
+			throw new NoSuchProductExistsException("Student doesn't exists");
+		}
+		return modelMapper.map(getProduct, ProductDto.class);
 
 		// return dto;
 
@@ -57,27 +64,40 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDto insertProduct(ProductDto productDto) {
 		// Product product = mapToEntity(productDto);
 		Product product = modelMapper.map(productDto, Product.class);
+		Product getProduct = productRepository.findById(product.getProductId()).get();
+		if(getProduct == null) {
 
 		Product insertedProduct = productRepository.save(product);
 
 		// StudentDto mapToDto=mapToDto(insertedStudent);
 		return modelMapper.map(insertedProduct, ProductDto.class);
+		}
+		else
+			throw new ProductExistsException("Product already exists");
 
 		// return mapToDto;
 	}
 
 	@Override
-	public void updatedProduct(int productId, ProductDto productDto) {
+	public ProductDto updatedProduct(int productId, ProductDto productDto) {
 		// Product product = mapToEntity(productDto);
+		//Product product = modelMapper.map(productDto, Product.class);
+		Product getProduct = productRepository.findById(productId).orElse(null);
+		if(getProduct == null) {
+			throw new NoSuchProductExistsException("Student doesnt exists");
+		}
 		Product product = modelMapper.map(productDto, Product.class);
-
-		productRepository.save(product);
+		Product updatedProduct = productRepository.save(product);
+		return modelMapper.map(updatedProduct, ProductDto.class);
 	}
 
 	@Override
 	public void deleteProduct(int productId) {
+		Product getProduct = productRepository.findById(productId).orElse(null);
+		if(getProduct == null) {
+			throw new NoSuchProductExistsException("Student doesnt exists");
+		}
 		productRepository.deleteById(productId);
-
 	}
 
 	@Override

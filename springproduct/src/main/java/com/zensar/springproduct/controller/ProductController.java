@@ -20,6 +20,11 @@ import com.zensar.springproduct.dto.ProductDto;
 import com.zensar.springproduct.entity.Product;
 import com.zensar.springproduct.service.ProductService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/product-api", produces = { MediaType.APPLICATION_JSON_VALUE,
 		MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE,
@@ -30,6 +35,7 @@ public class ProductController {
 	private ProductService ProductService;
 
 	// @RequestMapping("/product/{productId}")
+	@Operation(summary = "This is to fetch record by productId")
 	@GetMapping(value = "/products/{productId}")
 	public ResponseEntity<ProductDto> getProduct(@PathVariable("productId") int productId) {
 		return new ResponseEntity<ProductDto>(ProductService.getProduct(productId), HttpStatus.OK);
@@ -68,6 +74,10 @@ public class ProductController {
 	 */
 
 	// @RequestMapping(value = "/products",method = RequestMethod.GET)
+	@Operation(summary = "This is to get all the product records from database")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Fetched all records from database", content = {
+					@Content(mediaType = "application/json"), @Content(mediaType = "application/xml") }) })
 	@GetMapping(value = "/products")
 	public ResponseEntity<List<ProductDto>> getAllProducts(
 			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
@@ -79,6 +89,7 @@ public class ProductController {
 	}
 
 	// @RequestMapping(value="/products",method = RequestMethod.POST)
+	@Operation(summary = "to insert the record into database")
 	@PostMapping(value = "/products")
 	public ResponseEntity<ProductDto> insertProduct(@RequestBody ProductDto productDto) {
 		return new ResponseEntity<ProductDto>(ProductService.insertProduct(productDto), HttpStatus.CREATED);
@@ -86,6 +97,7 @@ public class ProductController {
 	}
 
 	// @RequestMapping(value = "/products/{productId}",method = RequestMethod.PUT)
+	@Operation(summary = "This is to update record by productId")
 	@PutMapping(value = "/products/{productId}")
 	public ResponseEntity<String> updatedProduct(@PathVariable("productId") int productId,
 			@RequestBody ProductDto productDto) {
@@ -98,6 +110,7 @@ public class ProductController {
 
 	// @RequestMapping(value = "/products/{productId}",method =
 	// RequestMethod.DELETE)
+	@Operation(summary = "This is to delete record by productId from database")
 	@DeleteMapping(value = "/products/{productId}")
 	public ResponseEntity<String> deleteProduct(@PathVariable("productId") int productId) {
 
