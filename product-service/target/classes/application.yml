@@ -6,6 +6,14 @@ spring:
   jpa:
    hibernate:
     ddl-auto: create
+    
+  application:
+    name: product-service
+    
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: true
 
 
   

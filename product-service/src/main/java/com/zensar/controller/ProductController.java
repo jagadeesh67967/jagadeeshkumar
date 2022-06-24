@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.zensar.entity.Coupon;
 import com.zensar.entity.Product;
+import com.zensar.restclient.CouponRestClient;
 import com.zensar.services.ProductService;
 
 @RestController
@@ -19,19 +20,25 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	/*
+	 * @Autowired private RestTemplate restTemplate;
+	 */
+	
 	@Autowired
-	private RestTemplate restTemplate;
+	private CouponRestClient restClient;
 	
 	@PostMapping("/")
 	public Product insertProduct(@RequestBody Product product) {
 		
 		//String couponCode = product.getCouponCode();
 		
-		ResponseEntity<Coupon> coupon = restTemplate.getForEntity("http://localhost:8082/coupons/"+product.getCouponCode(),Coupon.class);
+		Coupon coupon = restClient.getCoupon(product.getCouponCode());
 		
-		Coupon couponObject = coupon.getBody();
+		//ResponseEntity<Coupon> coupon = restTemplate.getForEntity("http://COUPON-SERVICE/coupons/"+product.getCouponCode(),Coupon.class);
 		
-		product.setPrice(product.getPrice()-couponObject.getDiscount());
+		//Coupon couponObject = ( coupon).getBody();
+		
+		product.setPrice(product.getPrice()-coupon.getDiscount());
 		
 		return productService.insertProduct(product);
 	}
