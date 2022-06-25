@@ -5,9 +5,24 @@ public class CoupenDto {
 	private int coupenId;
 	private String expDate;
 	private String coupenCode;
+	private Double discount;
 	
+
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
 	public CoupenDto() {
 		super();
+	}
+	
+	public CoupenDto(Double discount) {
+		super();
+		this.discount = discount;
 	}
 
 	public CoupenDto(int coupenId, String expDate, String coupenCode) {
@@ -43,8 +58,11 @@ public class CoupenDto {
 
 	@Override
 	public String toString() {
-		return "CoupenDto [coupenId=" + coupenId + ", expDate=" + expDate + ", coupenCode=" + coupenCode + "]";
+		return "CoupenDto [coupenId=" + coupenId + ", expDate=" + expDate + ", coupenCode=" + coupenCode + ", discount="
+				+ discount + "]";
 	}
+
+	
 	
 	
 	

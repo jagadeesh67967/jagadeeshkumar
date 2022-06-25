@@ -17,16 +17,18 @@ public class CoupenEntity {
 	private int coupenId;
 	private String expDate;
 	private String coupenCode;
+	private Double discount;
 
 	public CoupenEntity() {
 		super();
 	}
-	
-	public CoupenEntity(int coupenId, String expDate, String coupenCode) {
+
+	public CoupenEntity(int coupenId, String expDate, String coupenCode, Double discount) {
 		super();
 		this.coupenId = coupenId;
 		this.expDate = expDate;
 		this.coupenCode = coupenCode;
+		this.discount = discount;
 	}
 
 	public int getCoupenId() {
@@ -53,10 +55,21 @@ public class CoupenEntity {
 		this.coupenCode = coupenCode;
 	}
 
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
 	@Override
 	public String toString() {
-		return "CoupenEntity [coupenId=" + coupenId + ", expDate=" + expDate + ", coupenCode=" + coupenCode + "]";
+		return "CoupenEntity [coupenId=" + coupenId + ", expDate=" + expDate + ", coupenCode=" + coupenCode
+				+ ", discount=" + discount + "]";
 	}
+	
+	
 	
 	
 
