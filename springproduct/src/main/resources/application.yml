@@ -11,6 +11,8 @@ spring:
       hibernate:
         format_sql: true
        # dialect: org.hibernate.dialect.MySQLDialect
+  application:
+    name: product-service
        
 management:
   endpoints:
@@ -40,6 +42,11 @@ logging:
   level:
     com:
     zensar: debug
+    
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: true
        
       
       

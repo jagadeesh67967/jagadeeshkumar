@@ -1,20 +1,26 @@
 package com.zensar.springproduct.dto;
 
+import javax.persistence.Transient;
+
 public class ProductDto {
-	
+
 	private int productId;
 	private String productName;
-	private int productCost;
+	private Double price;
+	
+	@Transient
+	private String coupenCode;
 	
 	public ProductDto() {
 		super();
 	}
 
-	public ProductDto(int productId, String productName, int productCost) {
+	public ProductDto(int productId, String productName, Double price, String coupenCode) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
-		this.productCost = productCost;
+		this.price = price;
+		this.coupenCode = coupenCode;
 	}
 
 	public int getProductId() {
@@ -33,20 +39,27 @@ public class ProductDto {
 		this.productName = productName;
 	}
 
-	public int getProductCost() {
-		return productCost;
+
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setProductCost(int productCost) {
-		this.productCost = productCost;
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getCoupenCode() {
+		return coupenCode;
+	}
+
+	public void setCoupenCode(String coupenCode) {
+		this.coupenCode = coupenCode;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductDto [productId=" + productId + ", productName=" + productName + ", productCost=" + productCost
-				+ "]";
+		return "ProductDto [productId=" + productId + ", productName=" + productName + ", price=" + price + ", coupenCode=" + coupenCode + "]";
 	}
-	
-	
 
+	
 }

@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import com.zensar.springproduct.dto.CoupenDto;
 import com.zensar.springproduct.dto.ProductDto;
 import com.zensar.springproduct.entity.Product;
+import com.zensar.springproduct.restclient.CoupenRestClient;
 import com.zensar.springproduct.service.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +36,14 @@ public class ProductController {
 
 	@Autowired
 	private ProductService ProductService;
+	private CoupenDto product;
+
+	@Autowired
+	private CoupenRestClient restClient;
+
+	/*
+	 * @Autowired private RestTemplate restTemplate;
+	 */
 
 	// @RequestMapping("/product/{productId}")
 	@Operation(summary = "This is to fetch record by productId")
@@ -92,6 +103,17 @@ public class ProductController {
 	@Operation(summary = "to insert the record into database")
 	@PostMapping(value = "/products")
 	public ResponseEntity<ProductDto> insertProduct(@RequestBody ProductDto productDto) {
+
+		//String CoupenCode = product.getCoupenCode();
+		
+		CoupenDto coupenDto = restClient.getCoupen(product.getCoupenCode());
+		
+		//ResponseEntity<CoupenDto> coupen = restTemplate.getForEntity("http://COUPEN-SERVICE/coupens/"+product.getCoupenCode(),CoupenDto.class);
+ 
+		//CoupenDto couponObject = ( coupen).getBody();
+		
+		productDto.setPrice(productDto.getPrice()-coupenDto.getDiscount());
+		
 		return new ResponseEntity<ProductDto>(ProductService.insertProduct(productDto), HttpStatus.CREATED);
 
 	}
