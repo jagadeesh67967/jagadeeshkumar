@@ -9,7 +9,7 @@ import com.zensar.springproduct.dto.CoupenDto;
 @FeignClient("COUPEN-SERVICE")
 public interface CoupenRestClient {
 	
-	@GetMapping("/coupens/{coupenCode}")
+	@GetMapping("/coupen-api/coupens/coupencode/{coupenCode}")
 	CoupenDto getCoupen(@PathVariable("coupenCode")String coupenCode);
 
 }
