@@ -1,5 +1,7 @@
 package com.zensar.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,19 @@ public class CouponServiceImpl implements CouponService {
 	
 	public Coupon getCoupon(String couponCode) {
 		return couponRepository.findByCouponCode(couponCode);
+	}
+
+
+	@Override
+	public List<Coupon> getAllCoupons() {
+		return couponRepository.findAll();
+	}
+
+
+	@Override
+	public void deleteCoupon(String couponCode) {
+		// TODO Auto-generated method stub
+		couponRepository.deleteByCouponCode(couponCode);
 	}
 
 }

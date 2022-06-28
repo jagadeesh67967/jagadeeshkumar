@@ -7,4 +7,5 @@ import com.zensar.entity.Coupon;
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 
 	Coupon findByCouponCode(String couponCode);
+	Coupon deleteByCouponCode(String couponCode);
 }
