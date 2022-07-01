@@ -12,7 +12,7 @@ public class SpringstudentApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringstudentApplication.class, args);
-		System.out.println("raju");
+		System.out.println("Varadaraju");
 	}
 	
 
