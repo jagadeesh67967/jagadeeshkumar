@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/javabatch
+    password: root
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+       # dialect: org.hibernate.dialect.MySQLDialect
+  security:
+    user:
+      name: admin
+      password: admin@123
+       
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+        exclude:
+        - beans
+        
+      base-path: /myactuator
+      
+  info:
+    build:
+      enabled: true
+    git:
+      enabled: true
+    env:
+      enabled: true
+   # created by: jagadeesh
+        
+  endpoint:
+    shutdown:
+      enabled: true 
+      
+logging:
+  level:
+    com:
+    zensar: debug
+    
+       
+      
+      
+ 
+        
+      
