@@ -15,7 +15,7 @@
 	<name>springstudent</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<!-- <packaging>war</packaging> -->
+		 <packaging>war</packaging>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
