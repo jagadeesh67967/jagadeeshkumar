@@ -16,7 +16,7 @@
 	<name>springstudent</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<packaging>war</packaging>
+		<!-- <packaging>war</packaging> -->
 		<sonar.login>admin</sonar.login>
 		<sonar.password>admin1</sonar.password>
 		<java.version>11</java.version>
