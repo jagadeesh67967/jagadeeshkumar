@@ -91,7 +91,7 @@ public class StudentController {
 	}
 
 	// @RequestMapping(value="/students",method = RequestMethod.POST)
-	@Operation(summary = "to insert the record into database")
+	//@Operation(summary = "to insert the record into database")
 	@PostMapping(value = "/students")
 	public ResponseEntity<StudentDto> insertStudent(@RequestBody StudentDto studentDto) {
 		return new ResponseEntity<StudentDto>(StudentService.insertStudent(studentDto), HttpStatus.CREATED);
