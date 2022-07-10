@@ -65,7 +65,7 @@ public class CoupenServiceImpl implements CoupenService {
 
 		CoupenEntity coupen = modelMapper.map(coupenDto, CoupenEntity.class);
 		
-		CoupenEntity getCoupen = coupenRepository.findById(coupen.getCoupenId()).get();
+		CoupenEntity getCoupen = coupenRepository.findById(coupen.getCoupenId()).orElse(null);
 		if(getCoupen == null) {
 
 		CoupenEntity insertedCoupen = coupenRepository.save(coupen);
