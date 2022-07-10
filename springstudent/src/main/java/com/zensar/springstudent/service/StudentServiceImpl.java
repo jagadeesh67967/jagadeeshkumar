@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
 	public StudentDto insertStudent(StudentDto studentDto) {
 		// Student student = mapToEntity(studentDto);
 		Student student = modelMapper.map(studentDto, Student.class);
-		Student getStudent = studentRepository.findById(student.getStudentId()).get();
+		Student getStudent = studentRepository.findById(student.getStudentId()).orElse(null);
 		if(getStudent == null) {
 
 		Student insertedStudent = studentRepository.save(student);
